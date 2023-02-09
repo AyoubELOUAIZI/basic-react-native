@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, FlatList, Alert } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Alert, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import AddTodo from './components/addTodo';
 import Header from './components/header';
+import Sandbox from './components/sandbox';
 import TodoItem from './components/todoItem';
 
 export default function App() {
@@ -18,42 +19,48 @@ export default function App() {
   };
 
 
- const submitHandler=(text)=>{
-   if (text.length > 3) {
-  //this is very important to generate the key
-  let maxkey=1;
-  if(todos.length>0){
-     maxkey = Math.max(...todos.map(todo => parseInt(todo.key))) + 1;
+  const submitHandler = (text) => {
+    if (text.length > 3) {
+      //this is very important to generate the key
+      let maxkey = 1;
+      if (todos.length > 0) {
+        maxkey = Math.max(...todos.map(todo => parseInt(todo.key))) + 1;
+      }
+      console.log(maxkey);
+
+      setTodos((prevTodos) => [...prevTodos, { text: text, key: maxkey.toString() }])
+    } else {
+      Alert.alert('OOPS', 'Todo must be over 3 characters long', [
+        { text: 'OK', onPress: () => console.log('alert closed') }
+      ]);
+    }
+
+
   }
-   console.log(maxkey);
-   
-   setTodos((prevTodos) => [...prevTodos, { text: text, key: maxkey.toString()}])
- }else{
-     Alert.alert('OOPS', 'Todo must be over 3 characters long', [
-       { text: 'OK', onPress: () => console.log('alert closed') }
-     ]);
- }
-
-
-}
 
 
   return (
-    <View style={styles.container}>
-      <Header />
-      <View style={styles.content}>
-        {/* add todo form */}
-        <AddTodo submitHandler={submitHandler}/>
-        <View style={styles.list}>
-          <FlatList
-            data={todos}
-            renderItem={({ item }) => (
-              <TodoItem item={item} pressHandler={pressHandler} />
-            )}
-          />
+    // <Sandbox/>
+    <TouchableWithoutFeedback onPress={()=>{
+      Keyboard.dismiss();
+      console.log("TouchableWithoutFeedback it is being used to know when to remove the keybord");
+    }}>
+      <View style={styles.container}>
+        <Header />
+        <View style={styles.content}>
+          {/* add todo form */}
+          <AddTodo submitHandler={submitHandler} />
+          <View style={styles.list}>
+            <FlatList
+              data={todos}
+              renderItem={({ item }) => (
+                <TodoItem item={item} pressHandler={pressHandler} />
+              )}
+            />
+          </View>
         </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -64,8 +71,12 @@ const styles = StyleSheet.create({
   },
   content: {
     padding: 40,
+    backgroundColor: 'yellow',
+    flex: 1,
   },
   list: {
     marginTop: 20,
+    backgroundColor: 'lightgrey',
+    flex: 1,
   },
 });
