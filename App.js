@@ -1,62 +1,34 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, Button } from 'react-native';
 
 export default function App() {
+  const [name, setName] = useState('ayoub');
+  const [person, setPerson] = useState({ name: 'ahmed', age: 20 });
+
+  const clickHandler = () => {
+    setName('elouaizi');
+    setPerson({ name: 'mohammed', age: 25 });
+  };
+
   return (
-    <>
-
-      <View style={styles.headere}>
-        <Text style={styles.headere} >First app</Text>
+    <View style={styles.container}>
+      <Text>My name is {name}</Text>
+      <Text>His name is {person.name} and his age is {person.age}</Text>
+      <View style={styles.buttonContainer}>
+        <Button title='update the state' onPress={clickHandler} />
       </View>
-
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.boldText}>Hello, World from react native!</Text>
-        </View>
-        <View style={styles.body}>
-          <Text>Lorem ipsum <Text style={styles.boldText}>dolor</Text> sit amet.</Text>
-          <Text>Lorem ipsum dolor sit amet.</Text>
-          <Text>Lorem ipsum dolor sit amet.</Text>
-        </View>
-      </View>
-
-      <View style={styles.footer}>
-        <Text >edited by ayoub </Text>
-      </View>
-
-    </>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'blue',
+    backgroundColor: 'yellow',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  header: {
-    backgroundColor: 'green',
-    padding: 40,
-  },
-  body: {
-    backgroundColor: 'pink',
-    padding: 50,
-    margin: 10,
-  },
-  boldText: {
-    fontWeight: 'bold',
-  },
-  footer: {
-    backgroundColor: "yellow"
-  },
-  headere: {
-    marginTop:20,
-    backgroundColor: "#fff",
-    alignItems: 'center',
-    color: '#000',
-    fontWeight: 'bold',
-    fontSize: 20,
-
+  buttonContainer: {
+    marginTop: 20,
   }
 });
