@@ -1,22 +1,28 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, TextInput } from 'react-native';
 
 export default function App() {
-  const [name, setName] = useState('ayoub');
-  const [person, setPerson] = useState({ name: 'ahmed', age: 20 });
-
-  const clickHandler = () => {
-    setName('elouaizi');
-    setPerson({ name: 'mohammed', age: 25 });
-  };
+  const [name, setName] = useState('ahmed');
+  const [age, setAge] = useState('30');
 
   return (
     <View style={styles.container}>
-      <Text>My name is {name}</Text>
-      <Text>His name is {person.name} and his age is {person.age}</Text>
-      <View style={styles.buttonContainer}>
-        <Button title='update the state' onPress={clickHandler} />
+      <View style={styles.mybloc}>
+        <Text>Enter name:</Text>
+        <TextInput
+          placeholder='your name'
+          style={styles.input}
+          onChangeText={(value) => setName(value)} />
       </View>
+      <View style={styles.mybloc}>
+        <Text>Enter age:</Text>
+        <TextInput
+          placeholder='your age'
+          style={styles.input}
+          onChangeText={(value) => setAge(value)} />
+      </View>
+
+      <Text style={styles.result}>name: {name}, age: {age}</Text>
     </View>
   );
 }
@@ -24,11 +30,25 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'yellow',
-    alignItems: 'center',
+    backgroundColor:'yellow',
+    // alignItems: 'center',
     justifyContent: 'center',
   },
-  buttonContainer: {
-    marginTop: 20,
+  input: {
+    borderWidth: 1,
+    borderColor: '#777',
+    padding: 2,
+    margin: 10,
+    width: 250,
+    borderRadius:8,
+  },
+  mybloc: {
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'space-evenly',
+
+  },
+  result:{
+    padding:10,
   }
 });
