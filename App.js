@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
+import AddTodo from './components/addTodo';
 import Header from './components/header';
 import TodoItem from './components/todoItem';
 
@@ -16,11 +17,24 @@ export default function App() {
     });
   };
 
+
+ const submitHandler=(text)=>{
+  //this is very important to generate the key
+  let maxkey=1;
+  if(todos.length>0){
+     maxkey = Math.max(...todos.map(todo => parseInt(todo.key))) + 1;
+  }
+   console.log(maxkey);
+   
+   setTodos((prevTodos) => [...prevTodos, { text: text, key: maxkey.toString()}])
+ }
+
   return (
     <View style={styles.container}>
       <Header />
       <View style={styles.content}>
         {/* add todo form */}
+        <AddTodo submitHandler={submitHandler}/>
         <View style={styles.list}>
           <FlatList
             data={todos}
