@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Alert } from 'react-native';
 import AddTodo from './components/addTodo';
 import Header from './components/header';
 import TodoItem from './components/todoItem';
@@ -19,6 +19,7 @@ export default function App() {
 
 
  const submitHandler=(text)=>{
+   if (text.length > 3) {
   //this is very important to generate the key
   let maxkey=1;
   if(todos.length>0){
@@ -27,7 +28,15 @@ export default function App() {
    console.log(maxkey);
    
    setTodos((prevTodos) => [...prevTodos, { text: text, key: maxkey.toString()}])
+ }else{
+     Alert.alert('OOPS', 'Todo must be over 3 characters long', [
+       { text: 'OK', onPress: () => console.log('alert closed') }
+     ]);
  }
+
+
+}
+
 
   return (
     <View style={styles.container}>
